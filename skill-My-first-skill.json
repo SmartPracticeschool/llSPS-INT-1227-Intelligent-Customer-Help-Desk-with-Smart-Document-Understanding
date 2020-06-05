@@ -1,0 +1,476 @@
+{
+  "intents": [
+    {
+      "intent": "thanks",
+      "examples": [
+        {
+          "text": "thanks"
+        },
+        {
+          "text": "Thank you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Product_Information",
+      "examples": [
+        {
+          "text": "wi-fi"
+        },
+        {
+          "text": "switch-off"
+        },
+        {
+          "text": "how do i switch on mobile data"
+        },
+        {
+          "text": "How do I switch-off my phone"
+        },
+        {
+          "text": "sim"
+        },
+        {
+          "text": "force reboot"
+        },
+        {
+          "text": "How do I switch on the mobile hotspot"
+        },
+        {
+          "text": "mi drop"
+        },
+        {
+          "text": "open camera"
+        },
+        {
+          "text": "make a call"
+        },
+        {
+          "text": "turn on wifi"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greet",
+      "examples": [
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hei"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "Hey"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "greet",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "good morning",
+          "synonyms": [
+            "morning",
+            "mrng"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "good afternoon",
+          "synonyms": [
+            "afternoon"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "good evening",
+          "synonyms": [
+            "evening"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "hey",
+          "synonyms": [
+            "hello",
+            "hi",
+            "howdy",
+            "hiya"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "descriptive",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "more details",
+          "synonyms": [
+            "more"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "descriptive",
+          "synonyms": [
+            "illustrative",
+            "brief",
+            "briefly",
+            "explain"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "thanks",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "thank",
+          "synonyms": [
+            "thankyou",
+            "thanx",
+            "cheers",
+            "thank you"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "product_information",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "switch off",
+          "synonyms": [
+            "switch-off"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "hotspot",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "wi-fi",
+          "synonyms": [
+            "wifi"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    },
+    "from-sample": true
+  },
+  "webhooks": [
+    {
+      "url": "https://eu-gb.functions.cloud.ibm.com/api/v1/web/jatin.mundra%40learner.manipal.edu_dev/default/cloudfunction_mi.json",
+      "name": "main_webhook",
+      "headers": []
+    }
+  ],
+  "dialog_nodes": [
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "\"<?$webhook_result_1.passages[0].passage_text?>\""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_5_1591262438991",
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_8_1591262448483",
+      "previous_sibling": "node_3_1591353039818"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "text": {
+          "values": [
+            "\"Wanna speak with an executive?\""
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_5_1591262438991",
+      "conditions": "anything_else",
+      "dialog_node": "response_4_1591262450848",
+      "previous_sibling": "response_8_1591262448483"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else - copy1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1591262438991",
+      "conditions": "anything_else",
+      "dialog_node": "node_3_1591353039818",
+      "previous_sibling": "node_2_1591352947609"
+    },
+    {
+      "type": "standard",
+      "title": "Thanks - copy1 - copy1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks for reaching out, I hope I was helpful :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1591262438991",
+      "conditions": "@thanks || #thanks",
+      "dialog_node": "node_2_1591352947609",
+      "previous_sibling": "node_6_1591349863954"
+    },
+    {
+      "type": "standard",
+      "title": "descriptive",
+      "parent": "node_5_1591262438991",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@descriptive",
+      "dialog_node": "node_6_1591349863954"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks for reaching out, hope I was helpful :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1591349863954",
+      "conditions": "@thanks",
+      "dialog_node": "response_9_1591352517061",
+      "previous_sibling": "response_3_1591352490198"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "\"<?$webhook_result_1.results[0].text?>\""
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1591349863954",
+      "conditions": "@descriptive",
+      "dialog_node": "response_3_1591352490198",
+      "previous_sibling": "node_1_1591351582668"
+    },
+    {
+      "type": "standard",
+      "title": "Thanks - copy1",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Thanks for reaching out, I hope I was helpful :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_6_1591349863954",
+      "conditions": "@thanks || #thanks",
+      "dialog_node": "node_1_1591351582668"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "@greet, how may I help you ?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_10_1591349259913",
+      "conditions": "@greet",
+      "dialog_node": "response_5_1591349282951"
+    },
+    {
+      "type": "standard",
+      "title": "Greeting",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "@greet",
+      "dialog_node": "node_10_1591349259913",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "digress_in": "does_not_return",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_5_1591262438991",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "input": "<?input_text?>"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$webhook_result_1 || @product_information",
+      "dialog_node": "node_5_1591262438991",
+      "previous_sibling": "node_10_1591349259913"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "hii"
+    }
+  ],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "My first skill",
+  "language": "en",
+  "description": ""
+}
