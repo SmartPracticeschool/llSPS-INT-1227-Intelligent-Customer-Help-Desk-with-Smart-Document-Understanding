@@ -1,3 +1,4 @@
-YouTube Link for the video:
+YouTube Link for the video: https://youtu.be/s89Q-9NxlqQ
+ 
+NodeREd UI Link: https://node-red-nxkix.eu-gb.mybluemix.net/ui
 
-https://youtu.be/s89Q-9NxlqQ
